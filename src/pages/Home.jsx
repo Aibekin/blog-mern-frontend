@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
@@ -12,6 +12,7 @@ export const Home = () => {
 	const dispatch = useDispatch();
 	const userData = useSelector(state => state.auth.data);
 	const { posts, tags } = useSelector(state => state.posts);
+	const [sortContent, setSortContent] = useState(false)
 
 	const isPostsLoading = posts.status === 'loading';
 	const isTagsLoading = tags.status === 'loading';
@@ -26,27 +27,31 @@ export const Home = () => {
 	return (
 		<>
 			<Tabs style={{ marginBottom: 15 }} value={0} aria-label="basic tabs example">
-				<Tab label="Новые" />
-				<Tab label="Популярные" />
+				<Tab label="Новые" onClick={setSortContent(false)} />
+				<Tab label="Популярные" onClick={setSortContent(true)} />
 			</Tabs>
 			<Grid container spacing={4}>
 				<Grid xs={8} item>
-					{(isPostsLoading ? [...Array(5)] : posts.items).map((obj, index) =>
-						isPostsLoading ? (
-							<Post key={index} isLoading={true} />
-						) : (
-							<Post
-								id={obj._id}
-								title={obj.title}
-								imageUrl={obj.imageUrl ? `${process.env.REACT_APP_API_URL}${obj.imageUrl}` : ''}
-								user={obj.user}
-								createdAt={obj.createdAt}
-								viewsCount={obj.viewsCount}
-								commentsCount={3}
-								tags={obj.tags}
-								isEditable={userData?._id === obj.user._id}
-							/>
-						))}
+					{(isPostsLoading
+						? [...Array(5)]
+						: sortContent
+							? posts.items.slice().sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
+							: posts.items.slice().sort((a, b) => new Date(b.viewsCount) - new Date(a.viewsCount))).map((obj, index) =>
+								isPostsLoading ? (
+									<Post key={index} isLoading={true} />
+								) : (
+									<Post
+										id={obj._id}
+										title={obj.title}
+										imageUrl={obj.imageUrl ? `${process.env.REACT_APP_API_URL}${obj.imageUrl}` : ''}
+										user={obj.user}
+										createdAt={obj.createdAt}
+										viewsCount={obj.viewsCount}
+										commentsCount={3}
+										tags={obj.tags}
+										isEditable={userData?._id === obj.user._id}
+									/>
+								))}
 				</Grid>
 				<Grid xs={4} item>
 					<TagsBlock items={tags.items} isLoading={isTagsLoading} />
