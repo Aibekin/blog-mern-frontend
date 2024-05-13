@@ -12,7 +12,7 @@ export const Home = () => {
 	const dispatch = useDispatch();
 	const userData = useSelector(state => state.auth.data);
 	const { posts, tags } = useSelector(state => state.posts);
-	const [sortContent, setSortContent] = useState(false)
+	const [sortContent, setSortContent] = useState(true)
 
 	const isPostsLoading = posts.status === 'loading';
 	const isTagsLoading = tags.status === 'loading';
@@ -34,7 +34,7 @@ export const Home = () => {
 
 	return (
 		<>
-			<Tabs style={{ marginBottom: 15 }} value={sortContent ? 1 : 0} aria-label="basic tabs example">
+			<Tabs style={{ marginBottom: 15 }} value={sortContent ? 0 : 1} aria-label="basic tabs example">
 				<Tab label="Новые" onClick={handleSortByDate} />
 				<Tab label="Популярные" onClick={handleSortByViews} />
 			</Tabs>
