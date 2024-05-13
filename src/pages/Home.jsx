@@ -12,7 +12,7 @@ export const Home = () => {
 	const dispatch = useDispatch();
 	const userData = useSelector(state => state.auth.data);
 	const { posts, tags } = useSelector(state => state.posts);
-	const [sortContent, setSortContent] = useState(true)
+	const [sortContent, setSortContent] = useState(false)
 
 	const isPostsLoading = posts.status === 'loading';
 	const isTagsLoading = tags.status === 'loading';
@@ -23,11 +23,11 @@ export const Home = () => {
 	}, []);
 
 	const handleSortByViews = () => {
-		setSortContent(false);
+		setSortContent(true);
 	}
 
 	const handleSortByDate = () => {
-		setSortContent(true);
+		setSortContent(false);
 	}
 
 	console.log(posts);
