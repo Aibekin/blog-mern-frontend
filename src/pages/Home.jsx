@@ -44,7 +44,7 @@ export const Home = () => {
 						? [...Array(5)]
 						: posts.items.slice().sort((a, b) => sortContent
 							? new Date(b.createdAt) - new Date(a.createdAt)
-							: Number(a.viewsCount) - Number(b.viewsCount))).map((obj, index) =>
+							: Number(b.viewsCount) - Number(a.viewsCount))).map((obj, index) =>
 								isPostsLoading ? (
 									<Post key={index} isLoading={true} />
 								) : (
