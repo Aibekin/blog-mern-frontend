@@ -12,6 +12,7 @@ export const Home = () => {
 	const dispatch = useDispatch();
 	const userData = useSelector(state => state.auth.data);
 	const { posts, tags } = useSelector(state => state.posts);
+	const [sortContent, setSortContent] = useState(false)
 
 	const isPostsLoading = posts.status === 'loading';
 	const isTagsLoading = tags.status === 'loading';
@@ -21,19 +22,29 @@ export const Home = () => {
 		dispatch(fetchTags());
 	}, []);
 
+	const handleSortByViews = () => {
+		setSortContent(false);
+	}
+
+	const handleSortByDate = () => {
+		setSortContent(true);
+	}
+
 	console.log(posts);
 
 	return (
 		<>
 			<Tabs style={{ marginBottom: 15 }} value={0} aria-label="basic tabs example">
-				<Tab label="Новые" />
-				<Tab label="Популярные" />
+				<Tab label="Новые" onClick={handleSortByDate} />
+				<Tab label="Популярные" onClick={handleSortByViews} />
 			</Tabs>
 			<Grid container spacing={4}>
 				<Grid xs={8} item>
 					{(isPostsLoading
 						? [...Array(5)]
-						: posts.items.slice().sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))).map((obj, index) =>
+						: posts.items.slice().sort((a, b) => sortContent
+							? new Date(b.createdAt) - new Date(a.createdAt)
+							: Number(a.viewsCount) - Number(b.viewsCount))).map((obj, index) =>
 								isPostsLoading ? (
 									<Post key={index} isLoading={true} />
 								) : (
