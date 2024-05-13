@@ -40,7 +40,7 @@ export const Home = () => {
 								title={obj.title}
 								imageUrl={obj.imageUrl ? `${process.env.REACT_APP_API_URL}${obj.imageUrl}` : ''}
 								user={obj.user}
-								createdAt={obj.createdAt}
+								createdAt={new Intl.DateTimeFormat('ru_RU').format(obj.createdAt)}
 								viewsCount={obj.viewsCount}
 								commentsCount={3}
 								tags={obj.tags}
