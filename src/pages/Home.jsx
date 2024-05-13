@@ -42,7 +42,7 @@ export const Home = () => {
 										title={obj.title}
 										imageUrl={obj.imageUrl ? `${process.env.REACT_APP_API_URL}${obj.imageUrl}` : ''}
 										user={obj.user}
-										createdAt={new Date(obj.createdAt)}
+										createdAt={obj.createdAt}
 										viewsCount={obj.viewsCount}
 										commentsCount={3}
 										tags={obj.tags}
