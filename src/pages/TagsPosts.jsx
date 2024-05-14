@@ -8,28 +8,24 @@ export function TagsPosts() {
     const { posts } = useSelector(state => state.posts);
 
     // Фильтруем посты по тегу
-    const filteredPosts = posts.items.filter(post => post.tags.map(s => s === tag));
+    const filteredPosts = posts.items.filter(post => post.tags.includes(tag));
 
     return (
         <div>
-            {filteredPosts.length > 0 ? (
-                filteredPosts.map(post => (
-                    <Post
-                        key={post._id}
-                        id={post._id}
-                        title={post.title}
-                        imageUrl={post.imageUrl ? `${process.env.REACT_APP_API_URL}${post.imageUrl}` : ''}
-                        user={post.user}
-                        createdAt={post.createdAt}
-                        viewsCount={post.viewsCount}
-                        commentsCount={3} // Assuming a default value for commentsCount
-                        tags={post.tags}
-                        isEditable={userData?._id === post.user._id}
-                    />
-                ))
-            ) : (
-                <p>Нет постов с тегом "{tag}".</p>
-            )}
+            {filteredPosts.map(post => (
+                <Post
+                    key={post._id}
+                    id={post._id}
+                    title={post.title}
+                    imageUrl={post.imageUrl ? `${process.env.REACT_APP_API_URL}${post.imageUrl}` : ''}
+                    user={post.user}
+                    createdAt={post.createdAt}
+                    viewsCount={post.viewsCount}
+                    commentsCount={3} // Assuming a default value for commentsCount
+                    tags={post.tags}
+                    isEditable={userData?._id === post.user._id}
+                />
+            ))}
         </div>
     );
 }
