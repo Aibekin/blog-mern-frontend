@@ -1,6 +1,6 @@
 import { useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
-import Post from "../components/Post/index";
+import { Post } from "../components/Post/index";
 
 export function TagsPosts() {
     const { tag } = useParams();
