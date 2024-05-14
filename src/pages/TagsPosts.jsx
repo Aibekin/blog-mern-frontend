@@ -8,7 +8,7 @@ export function TagsPosts() {
     const { posts } = useSelector(state => state.posts);
 
     // Фильтруем посты по тегу
-    const filteredPosts = posts.items.filter(post => post.tags.includes(tag));
+    const filteredPosts = posts.items.filter(post => post.tags.map(s => s === tag));
 
     return (
         <div>
